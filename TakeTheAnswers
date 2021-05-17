@@ -1,0 +1,10 @@
+import mysql.connector
+import re
+db = mysql.connector.connect(host="localhost", user="root", password="AndyDal01", database="pc")
+cursor = db.cursor()
+query = "SELECT lista_raspunsuri FROM answers WHERE nume_test = %s "
+testName = ("testSDA", )
+cursor.execute(query, testName)
+myresult = cursor.fetchall()
+listOfAnswers = list(myresult[0])
+answers = re.split(',', listOfAnswers[0])
