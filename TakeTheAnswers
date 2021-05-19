@@ -2,9 +2,17 @@ import mysql.connector
 import re
 db = mysql.connector.connect(host="localhost", user="root", password="AndyDal01", database="pc")
 cursor = db.cursor()
-query = "SELECT lista_raspunsuri FROM answers WHERE nume_test = %s "
-testName = ("testSDA", )
-cursor.execute(query, testName)
+#cautam numele testului care are un id primit ca variabila
+query1="SELECT nume_test FROM tests where id=%s"
+idTest=("3", )
+cursor.execute(query1,idTest)
+testName=cursor.fetchall()
+#print(testName)
+#cautam lista de rasunsuri dupa numele testului
+query2 = "SELECT lista_raspunsuri FROM answers WHERE nume_test = %s "
+cursor.execute(query2, testName[0])
 myresult = cursor.fetchall()
-listOfAnswers = list(myresult[0])
-answers = re.split(',', listOfAnswers[0])
+#print(myresult)
+listOfAnswers = list(myresult[0])#convertim lista raspunsurilor din tuplu->lista
+answers = re.split(',', listOfAnswers[0])#facem split pentru a avea fiecare rezultat in parte
+#print(answers)
